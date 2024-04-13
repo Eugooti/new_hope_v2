@@ -21,8 +21,8 @@ const readAll = async (model,req,res) => {
 const readByStudent = async (model,req,res) => {
     try {
         // Find document by id
-        const result = await model.findOne({ studentId: req.params.id, removed: false });
-        // If no results found, return document not found
+        const studentsId = req.params.id
+        const result = await model.findOne({studentsId});        // If no results found, return document not found
         if (!result) {
             return res.status(404).json({
                 success: false,

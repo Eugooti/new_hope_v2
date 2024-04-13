@@ -1,10 +1,9 @@
 const update = async (Model, req, res) => {
     try {
         // Find document by id and updates with the required fields
-        const result = await Model.findOneAndUpdate({ _id: req.params.id, removed: false }, req.body, {
-            new: true, // return the new result instead of the old one
-            runValidators: true,
-        }).exec();
+        const id = req.params.id;
+        const result = await Model.findByIdAndUpdate(id, req.body, { new: true });
+
         if (!result) {
             return res.status(404).json({
                 success: false,

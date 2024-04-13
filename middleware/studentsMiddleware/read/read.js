@@ -1,20 +1,21 @@
 const readById = async (Model, req, res) => {
     try {
-        // Find document by id
-        const result = await Model.findOne({ studentId: req.params.id, removed: false });
+        // Find document by school ID
+        const studentId = req.params.id
+        const result = await Model.findOne({studentId});
         // If no results found, return document not found
         if (!result) {
             return res.status(404).json({
                 success: false,
                 result: null,
-                message: 'No student found by this id: ' + req.params.id,
+                message: 'No student found by this school id: ' + req.params.id,
             });
         } else {
             // Return success response
             return res.status(200).json({
                 success: true,
                 result,
-                message: 'we found this document by this id: ' + req.params.id,
+                message: 'We found this document by this school id: ' + req.params.id,
             });
         }
     } catch (error) {
@@ -27,6 +28,7 @@ const readById = async (Model, req, res) => {
         });
     }
 };
+
 
 const readAll = async (model,req,res) => {
     try {

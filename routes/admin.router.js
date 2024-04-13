@@ -5,6 +5,8 @@ const rolesController=require('../controllers/adminController/rolesController/ro
 const feeController=require('../controllers/adminController/feeController/feeCategory.controller')
 const staffController=require('../controllers/adminController/staffController/staff.Controller')
 const studentController=require('../controllers/adminController/StudentsController/students.controller')
+const clinicMethods=require('../controllers/adminController/clinicController/clinic.controller')
+const timetableController=require('../controllers/adminController/timetable/timetable.controller')
 
 
 const router=express.Router();
@@ -51,6 +53,26 @@ router.route('/students/read').get(catchErrors(studentController.readAll))
 router.route('/students/read/:id').get(catchErrors(studentController.readById))
 router.route('/students/update/:id').put(catchErrors(studentController.update))
 router.route('/students/delete/:id').delete(catchErrors(studentController.remove))
+
+
+// -----------------------------------------------students specific routes-----------------------------------------------------
+
+router.route('/clinic/create/:studentsId').post(catchErrors(clinicMethods.create))
+router.route('/clinic/read').get(catchErrors(clinicMethods.readAll))
+router.route('/clinic/read/:id').get(catchErrors(clinicMethods.readeByStudent))
+router.route('/clinic/delete/:id').delete(catchErrors(clinicMethods.delete))
+
+
+// -----------------------------------------------timeTable specific routes-----------------------------------------------------
+
+router.route('/timeTable/create').post(catchErrors(timetableController.create))
+router.route('/timeTable/read').get(catchErrors(timetableController.readAll))
+router.route('/timeTable/read/:id').get(catchErrors(timetableController.readById))
+router.route('/timeTable/update/:id').put(catchErrors(timetableController.update))
+router.route('/timeTable/delete/:id').delete(catchErrors(timetableController.remove))
+
+
+
 
 
 module.exports=router

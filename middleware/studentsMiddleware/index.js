@@ -15,6 +15,9 @@ const studentMethods = (model) => {
     methods.readAll=async (req,res)=>{
         await readAll(model,req,res)
     }
+    methods.readById=async (req,res)=>{
+        await readById(model,req,res)
+    }
 
     methods.update=async (req,res)=>{
         await update(model,req,res)

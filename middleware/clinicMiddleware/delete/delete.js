@@ -6,7 +6,7 @@ const remove = async (Model, req, res) => {
         };
         // Find the document by id and delete it
         const result = await Model.findOneAndUpdate(
-            { studentId: req.params.id, removed: false },
+            { studentsId: req.params.id, removed: false },
             { $set: updates },
             {
                 new: true, // return the new result instead of the old one
