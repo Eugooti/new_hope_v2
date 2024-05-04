@@ -1,6 +1,7 @@
 const ClinicStatement=require('../../../model/clinic/clinic')
 const attendance=require('../../../model/attendance/attendance')
 const feeCollection=require('../../../model/fee/feeCollection/feeCollection')
+const admissionCass=require('../../../model/classes/grades')
 
 const createClinicStatement = async (studentsId,studentNames,gender,grade,createdBy) => {
     try {
@@ -78,14 +79,36 @@ const createFeeCollection = async (studentsId,grade)=>{
 
 }
 
+
+const addStudentToGrade = async (grade,studentId,firstName,lastName) => {
+
+    try {
+
+        const studentData={studentId,firstName,lastName};
+        const addToClass=await admissionCass.findOneAndUpdate(
+            {grade},
+            {$push:{students: studentData}},
+            {new: true}
+        )
+
+        return addToClass ? true : false;
+
+
+    }catch (error) {
+        console.error('Error admitting student to grade:', error.message);
+        return false;
+    }
+
+
+
+}
+
+
 const create = async (model,req,res) => {
     try {
         const {first_name, last_name, gender,yob, ups, birth_certificate_no, grade, parents, createdBy} = req.body;
         const studentsId = generateStudentId();
         const studentNames = `${first_name} ${last_name}`;
-        const clinicStatement = await createClinicStatement(studentsId, studentNames, grade,gender, createdBy)
-        const attendanceStatement=await createAttendance(studentsId,studentNames,grade,gender)
-        const feeCollection=await createFeeCollection(studentsId,grade)
 
         const result = new model({
             studentId:studentsId,
@@ -101,8 +124,12 @@ const create = async (model,req,res) => {
         })
         const saveStudent = await result.save()
         if (saveStudent) {
+            const clinicStatement = await createClinicStatement(studentsId, studentNames, grade,gender, createdBy)
+            const attendanceStatement=await createAttendance(studentsId,studentNames,grade,gender)
+            const feeCollection=await createFeeCollection(studentsId,grade)
+            const admit=addStudentToGrade(grade,studentsId,first_name,last_name)
 
-            if (clinicStatement&&attendanceStatement&&feeCollection) {
+            if (clinicStatement&&attendanceStatement&&feeCollection&&admit) {
                 return res.status(200).json({
                     success: true,
                     saveStudent,
@@ -113,6 +140,9 @@ const create = async (model,req,res) => {
 
             }
         }
+
+
+
     } catch (error) {
         console.error('Error creating new student:', error);
         res.status(500).json({ error: 'Error creating new student: ' + error.message });

@@ -8,7 +8,7 @@ const authMethods=()=>{
         await Login(req,res,next)
     }
 
-    AUTHMethods.Logout=async (req,res)=>{
+    AUTHMethods.logout=async (req,res)=>{
         await logout(req,res)
     }
 

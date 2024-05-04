@@ -2,23 +2,21 @@ const addRecord = async (model,req,res) => {
     try {
         const { studentId } = req.params;
 
-        const response=await model.findOne({studentId});
+
+        const response=await model.findOneAndUpdate(
+            {studentId},
+            {$push:{registers:req.body}},
+            {new: true}
+        );
 
         if (!response){
             return res.status(404).json({
                 success: false,
                 result: null,
-                message: 'Student not found with id'+studentId,
+                message: 'Error adding to register ',
             });
         }
 
-        const {visit_report}=response
-
-        visit_report.push(req.body)
-
-        await model.findByIdAndUpdate(response._id,{
-            visit_report
-        });
 
         return res.status(200).json({
             success: true,

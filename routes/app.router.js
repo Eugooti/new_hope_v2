@@ -30,7 +30,8 @@ router.route('/library/delete/:id').delete(catchErrors(libraryController.remove)
 
 router.route('/borrowing/create').post(catchErrors(bookBorrowingController.create))
 router.route('/borrowing/read').get(catchErrors(bookBorrowingController.readAll))
-router.route('/borrowing/read/:id').get(catchErrors(bookBorrowingController.readById))
+router.route('/borrowing/readOne/:id').get(catchErrors(bookBorrowingController.readById))
+router.route('/borrowing/read/:user').get(catchErrors(bookBorrowingController.readByUser))
 router.route('/borrowing/update/:id').put(catchErrors(bookBorrowingController.update))
 router.route('/borrowing/delete/:id').delete(catchErrors(bookBorrowingController.remove))
 
@@ -45,7 +46,8 @@ router.route('/courseBook/delete/:id').delete(catchErrors(courseBookController.r
 // ------------------------------------------events routes-------------------------------------------------------------
 router.route('/events/create').post(catchErrors(eventsController.create))
 router.route('/events/read').get(catchErrors(eventsController.readAll))
-router.route('/events/read/:id').get(catchErrors(eventsController.readById))
+router.route('/events/readOne/:id').get(catchErrors(eventsController.readById))
+router.route('/events/read/:user').get(catchErrors(eventsController.readByUser))
 router.route('/events/update/:id').put(catchErrors(eventsController.update))
 router.route('/events/delete/:id').delete(catchErrors(eventsController.remove))
 

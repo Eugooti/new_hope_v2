@@ -7,6 +7,8 @@ const staffController=require('../controllers/adminController/staffController/st
 const studentController=require('../controllers/adminController/StudentsController/students.controller')
 const clinicMethods=require('../controllers/adminController/clinicController/clinic.controller')
 const timetableController=require('../controllers/adminController/timetable/timetable.controller')
+const classesController=require('../controllers/adminController/StudentGrades/studentClasses.controller')
+const departmentController=require('../controllers/adminController/Department/departments.controller')
 
 
 const router=express.Router();
@@ -29,7 +31,7 @@ router.route('/fee/update/:id').put(catchErrors(feeController.update))
 router.route('/fee/delete/:id').delete(catchErrors(feeController.remove))
 
 
-// -----------------------------------------------role specific routes-----------------------------------------------------
+// -----------------------------------------------staff specific routes-----------------------------------------------------
 
 router.route('/staff/create').post(catchErrors(staffController.createStaff))
 router.route('/staff/read').get(catchErrors(staffController.readAll))
@@ -37,13 +39,7 @@ router.route('/staff/read/:id').get(catchErrors(staffController.readById))
 router.route('/staff/update/:id').put(catchErrors(staffController.update))
 router.route('/staff/delete/:id').delete(catchErrors(staffController.remove))
 
-// -----------------------------------------------role specific routes-----------------------------------------------------
 
-router.route('/fee/create').post(catchErrors(feeController.create))
-router.route('/fee/read').get(catchErrors(feeController.readAll))
-router.route('/fee/read/:id').get(catchErrors(feeController.readById))
-router.route('/fee/update/:id').put(catchErrors(feeController.update))
-router.route('/fee/delete/:id').delete(catchErrors(feeController.remove))
 
 
 // -----------------------------------------------students specific routes-----------------------------------------------------
@@ -70,6 +66,23 @@ router.route('/timeTable/read').get(catchErrors(timetableController.readAll))
 router.route('/timeTable/read/:id').get(catchErrors(timetableController.readById))
 router.route('/timeTable/update/:id').put(catchErrors(timetableController.update))
 router.route('/timeTable/delete/:id').delete(catchErrors(timetableController.remove))
+
+// -----------------------------------------------Grades specific routes-----------------------------------------------------
+
+router.route('/class/create').post(catchErrors(classesController.create))
+router.route('/class/read').get(catchErrors(classesController.readAll))
+router.route('/class/read/:id').get(catchErrors(classesController.readByGrade))
+router.route('/class/update/:id').put(catchErrors(classesController.update))
+router.route('/class/transfer/:grade').put(catchErrors(classesController.transfer))
+
+
+// -----------------------------------------------Department specific routes-----------------------------------------------------
+
+router.route('/department/create').post(catchErrors(departmentController.create))
+router.route('/department/read').get(catchErrors(departmentController.readAll))
+router.route('/department/read/:id').get(catchErrors(departmentController.readById))
+router.route('/department/update/:id').put(catchErrors(departmentController.update))
+router.route('/department/delete/:id').delete(catchErrors(departmentController.remove))
 
 
 

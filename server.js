@@ -13,10 +13,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const crypto=require('crypto')
 
-
-
-
-
 const port=process.env.PORT
 
 const app=express();
@@ -25,8 +21,6 @@ const app=express();
 // Listen to the custom events emitted by the database connection
 mongoose.connection.on('mongodbConnected', () => {
     // The MongoDB connection is open, you can start adding records
-
-
     const options={
         definition:{
             openapi:'3.0.0',

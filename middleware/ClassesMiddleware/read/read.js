@@ -1,8 +1,8 @@
-const readById = async (Model, req, res) => {
+const readByGrade = async (Model, req, res) => {
     try {
         // Find document by id
-        const id=req.params.id;
-        const result = await Model.findById(id);
+        const grade=req.params.id;
+        const result = await Model.findOne({grade});
         // If no results found, return document not found
         if (!result) {
             return res.status(404).json({
@@ -48,33 +48,4 @@ const readAll = async (model,req,res) => {
   }
 }
 
-
-const readByUser = async (model,req,res) => {
-    try {
-        const createdBy=req.params.user;
-
-        const events=await model.find({createdBy})
-
-        if (!events){
-            return res.status(404).json({error:"Error retrieving records",success:false})
-        }
-
-        return res.status(200).json({
-            success:true,
-            events:events,
-        })
-
-
-    }catch (error) {
-        return res.status(500).json({
-            success: false,
-            result: null,
-            message: error.message,
-            error: error,
-        });
-    }
-
-}
-
-
-module.exports = {readById,readAll,readByUser};
+module.exports = {readByGrade,readAll};

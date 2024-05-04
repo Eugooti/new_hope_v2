@@ -1,6 +1,6 @@
 const create=require('./create/create');
 const remove=require('./delete/delete')
-const {readAll,readById}=require('./read/read')
+const {readAll,readById,readByUser}=require('./read/read')
 const update=require('./update/update')
 
 const CRUDMethods = (model) => {
@@ -21,6 +21,11 @@ const CRUDMethods = (model) => {
   crudeMiddleware.readById =async (req,res) => {
         await readById(model,req,res)
     }
+
+    crudeMiddleware.readByUser =async (req,res) => {
+        await readByUser(model,req,res)
+    }
+
   crudeMiddleware.update =async (req,res) => {
         await update(model,req,res)
     }
